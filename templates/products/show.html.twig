@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <h1>{{product.title}}</h1>
+    <p><img src="{{product.picture}}" alt=""></p>
+    <p class="card-body bg-light">{{product.introduction|raw}}</p>
+
+    <p>{{product.description|markdown|raw}}</p>
+    <p>Prix :
+        {{product.price | price }}</p>
+    <p>Catégorie :
+        {{product.category.parent.name }}
+        |
+        {{product.category.name }}
+
+
+    </p>
+
+    <a href="{{path('cart_add', {id:product.id})}}" class="btn btn-success">
+        <i class="fas fa-shopping-cart mr-1"></i>
+        Ajouter au panier
+    </a>
+
+
+{% endblock %}

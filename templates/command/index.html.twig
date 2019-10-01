@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande
+{% endblock %}
+
+{% block body %}
+
+    <div class="alert alert-light">
+        <h2>Etape 1 : adresse de livraison</h2>
+    </div>
+    {{ form_start(form)}}
+    {{form_widget(form)}}
+
+    <button type="submit" class="btn btn-success">Continuer vers le payement</a>
+    {{form_end(form)}}
+
+
+{% endblock %}

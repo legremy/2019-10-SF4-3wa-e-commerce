@@ -1,0 +1,88 @@
+Notions nouvelles:
+=================
+
+(Twig)      condition if dans for (attention, déprécié : Using an "if" condition on "for" tag in "products/index.html.twig" at line 31 is deprecated since Twig 2.10.0, 
+            use a "filter" filter or an "if" condition inside the "for" body instead (if your condition depends on a variable updated inside the loop).)
+(Entités)   entité se référencant elle-même
+(Fixtures)  ajout de providers à faker
+(Twig)      Ecrire une extension Twig
+
+
+Nouveaux packages intéressants
+==============================
+composer require tgalopin/html-sanitizer-bundle
+composer require erusev/parsedown
+    Créer une class App\Utils\Markdown qui s'occupera de parser/sécuriser le texte
+    et appeler cette classe devenue service dans nos contrôleurs
+
+
+Panier
+======
+un panier, c'est plusieurs couples [produit=>quantité], le tout stocké dans un élément de la session par ex.
+
+
+extension twig
+==============
+Créer une classe App\Twig\MesExtensions qui étend de Twig\Extension\AbstractExtension
+créer une méthode formatPrice($value)
+créer une méthode getFilters() qui retourne un tableau contenant les filtres créés sous la form : 
+    new TwigFilter("price", [$this, "formatPrice"]) // (nom_du_filtre, callable); 
+
+messages flash
+==============
+
+
+Stripe : paiement en ligne
+==========================
+
+https://stripe.com/docs/payments/cards/collecting/web
+
+composer require stripe/stripe-php
+
+embed controller : afficher un controleur dans un twig
+======================================================
+<li class="nav-item">
+    <a class="nav-link btn btn-success mr-2" href="{{path('cart_index')}}">Panier
+        {{ render(controller(
+                'App\\Controller\\CartController::nbProducts'
+            )) }}
+    </a>
+</li>
+
+
+Services
+========
+On peut ajouter un service en déclarant une librairie dans services.yaml
+on peut vérifier avec php bin/console debug:autowiring --all recherchemotcle
+
+à faire, rendre le markdown plus efficace en créant un servcice capable de parser n'importe quel contenu, et créer un filtre afin d'en bénéficier dans twig même
+
+
+security.yaml et authentification
+=================================
+        main:
+            anonymous: true
+
+            form_login:
+                login_path: login
+                check_path: login
+permet de lier notre User au form "login" qu'on va créer
+
+
+protéger une route
+==================
+$this->denyAccessUnlessGranted('ROLE_USER');  // dans le controleur
+* @IsGranted('ROLE_USER) // dans l'annotation au dessus d'une méthode ou de la classe pour toutes les méthodes
+dernière méthode : security.yaml (à voir)
+
+récupérer l'utilisateur connecté
+================================
+injecter Security $security 
+puis $security->getUser()
+
+
+
+
+A étudier : requirements sur routes
+===================================
+ * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})

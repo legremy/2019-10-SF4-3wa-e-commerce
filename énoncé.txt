@@ -1,0 +1,13 @@
+APPLICATION E COMMERCE :
+-------------------------------------------
+Entité Category :
+- title
+
+Entité Product :
+- title
+- introduction
+- description
+- price (float)
+- picture (string)
+
+Liaison OneToMany : Category à Product

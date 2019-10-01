@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier
+{% endblock %}
+
+{% block body %}
+
+    <div class="alert alert-light">
+        <h2 class="alert-title">{{ block('title') }}</h2>
+
+    </div>
+
+
+    {% if items %}
+        <a href="{{path('cart_empty')}}" class="btn btn-danger">Vider le panier</a>
+    </p>
+
+
+    <table class="table table-striped">
+        <thead>
+            <th>Produit</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Total</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </thead>
+
+        <tbody>
+
+            {% for item in items %}
+
+                <tr>
+                    <td>{{item.product.title}}</td>
+                    <td>{{item.product.price | price}}</td>
+
+                    <td>{{ item.quantity }}</td>
+
+                    <td class="text-right">{{item.total| price}}</td>
+
+
+                    <td>
+                        <a href="{{path('cart_remove', {id:item.product.id})}}" class="btn btn-warning btn-small">Supprimer</a>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-right">Total :
+                </td>
+                <td class="text-right">{{total| price}}</td>
+                <td colspan="2"></td>
+
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right">Livraison :</td>
+                <td class="text-right">{{shipping | price}}</td>
+                <td colspan="2"></td>
+
+
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right">Total de la commande :</td>
+                <td class="text-right">{{grandTotal| price}}</td>
+                <td colspan="2"></td>
+
+
+            </tr>
+        </tfoot>
+    </table>
+    <a class="btn btn-success" href="{{path('command_index')}}">Valider ma commande</a>
+{% else %}
+    <p>Votre panier est vide</p>
+{% endif %}{% endblock %}

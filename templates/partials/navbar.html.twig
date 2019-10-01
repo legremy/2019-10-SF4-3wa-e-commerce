@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
+    <a class="navbar-brand" href="{{path('products_index')}}">SymCommerce</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav">
+            {% if app.user %}
+                <span class="navbar-text mr-3">Connecté en tant que
+
+                    {{app.user.fullname}}</span>
+                <li class="nav-item">
+                    <a class="btn btn-danger nav-link mr-3" href="{{path('logout')}}">Déconnexion</a>
+
+                </li>
+            {% endif %}
+
+            {% if not app.user %}
+                <li class="nav-item"></li>
+
+                <a class="nav-link" href="{{path('login')}}">Connexion</a>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="btn btn-primary nav-link" href="{{path('register')}}">Inscription</a>
+            </li>
+        {% endif %}
+
+
+        <li class="nav-item">
+            <a class="nav-link btn btn-success mr-2" href="{{path('cart_index')}}">Panier
+
+                {{ render(controller(
+                        'App\\Controller\\CartController::nbProducts'
+                    )) }}
+            </a>
+        </li>
+
+    </ul>
+    <form action="{{path('product_search')}}" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search">
+
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Recherche</button>
+    </form>
+</div></nav>

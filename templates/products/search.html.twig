@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+{% block title %}Recherche
+{% endblock %}
+{% block body %}
+    <div class="alert alert-light">
+        <h1>résultats de la recherche</h1>
+
+        <hr>
+        <p>Rechercher un autre produit ?</p>
+        <form>
+            <div class="row">
+                <div class="col-10">
+                    <input type="text" name="search" class="form-control" placeholder="Recherche..." value="{{search}}">
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-dark">Rechercher</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    {% for product in results %}
+        <div class="alert alert-secondary">
+            <h2>{{product.title}}
+                ({{product.price | price}})</h2>
+            {{ product.introduction | markdown | raw}}
+            <a href="{{path('products_show', {'id':product.id})}}" class="btn btn-primary">Voir plus</a>
+            <a href="{{path('cart_add', {'id':product.id})}}" class="btn btn-success">Ajouter au panier</a>
+
+        </div>
+
+
+    {% endfor %}
+
+{% endblock %}
